@@ -17,7 +17,7 @@ import uniqueID from "uniqid";
 import API from "../components/api";
 import { confirmAlert } from "react-confirm-alert";
 import { useHistory } from "react-router-dom";
-const bcrypt = require('bcryptjs');
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,6 +49,7 @@ export default function SignUpView() {
     const classes = useStyles();
     const history = useHistory();
     const { register, handleSubmit } = useForm();
+    const [errors, setErrors] = useState([]);
 
     const [textInput, setTextInput] = useState({
         fname: "",
@@ -59,23 +60,29 @@ export default function SignUpView() {
     });
 
     const onSubmit = () => {
+        setErrors([]);
         textInput.status = "Active";
-        textInput.tel = "012456789";
+        textInput.tel = "0000000000";
         textInput.workplace = "ABC Ltd";
         textInput.gender = "Male";
 
-        console.log(textInput);
         API.post("/api/registerTrainer", textInput)
             .then((res) => {
                 confirmAlert({
                     title: 'Registered Successfully',
                     message: 'You have successfully registered',
-                    buttons: [
-                        {
-                            label: 'Ok'
-                        }
-                    ]
+                    buttons: [{ label: 'Ok' }]
                 });
+            })
+            .catch((err) => {
+                const data = err.response?.data;
+                if (data?.details && Array.isArray(data.details)) {
+                    setErrors(data.details.map((d) => d.msg));
+                } else if (data?.error) {
+                    setErrors([data.error]);
+                } else {
+                    setErrors(['Registration failed. Please try again.']);
+                }
             });
     };
 
@@ -257,6 +264,15 @@ export default function SignUpView() {
                                 />
                             </Grid>
                         </Grid>
+                        {errors.length > 0 && (
+                            <Box mt={2} mb={1}>
+                                {errors.map((msg, i) => (
+                                    <Alert key={i} severity="error" style={{ marginBottom: 6 }}>
+                                        {msg}
+                                    </Alert>
+                                ))}
+                            </Box>
+                        )}
                         <Button
                             type="submit"
                             fullWidth

@@ -16,7 +16,6 @@ import {useHistory} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import API from "../components/api";
 import {confirmAlert} from "react-confirm-alert";
-const bcrypt = require('bcryptjs');
 
 
 function Copyright() {
@@ -61,6 +60,30 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    googleButton: {
+        margin: theme.spacing(0, 0, 2),
+        backgroundColor: '#fff',
+        color: '#757575',
+        border: '1px solid #ddd',
+        '&:hover': {
+            backgroundColor: '#f5f5f5',
+        },
+    },
+    divider: {
+        display: 'flex',
+        alignItems: 'center',
+        margin: theme.spacing(1, 0),
+        '& hr': {
+            flexGrow: 1,
+            border: 'none',
+            borderTop: '1px solid #ddd',
+        },
+        '& span': {
+            padding: theme.spacing(0, 1),
+            color: '#757575',
+            fontSize: '0.85rem',
+        },
+    },
 }));
 
 export default function SignInView() {
@@ -80,7 +103,8 @@ export default function SignInView() {
         API.post("/api/loginTrainer",{username:nic, password: pwd})
             .then(res=>{
                 if(res.status==200){
-                    sessionStorage.setItem("token",res.data.token);
+                    // Token is now stored in httpOnly cookie automatically
+                    // No need to store it in sessionStorage/localStorage
                     sessionStorage.setItem("id",res.data.id);
                     history.push("/home");
                     
@@ -181,6 +205,24 @@ export default function SignInView() {
                                 className={classes.submit}
                             >
                                 Sign In
+                            </Button>
+                            <div className={classes.divider}>
+                                <hr /><span>OR</span><hr />
+                            </div>
+                            <Button
+                                fullWidth
+                                variant="outlined"
+                                className={classes.googleButton}
+                                onClick={() => { window.location.href = 'http://localhost:3005/api/auth/google'; }}
+                                startIcon={
+                                    <img
+                                        src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                                        alt="Google"
+                                        style={{ width: 18, height: 18 }}
+                                    />
+                                }
+                            >
+                                Sign in with Google
                             </Button>
                             <Grid container>
                                 <Grid item xs>

@@ -5,6 +5,8 @@ import SignInView from '../views/SignIn';
 import SignUpView from '../views/SignUp';
 import HomeView  from '../views/Dashboard/Home';
 import ChartView from '../views/Dashboard/Chart';
+import OAuthCallback from '../views/OAuthCallback';
+import Settings from '../views/Settings';
 
 const hist = createBrowserHistory();
 
@@ -15,6 +17,8 @@ const routes = () => (
         <Route path="/register" component={SignUpView}/>
         <Route path="/home" component={HomeView}/>
         <Route path="/trainee/review" component={ChartView}/>
+        <Route path="/oauth-callback" component={OAuthCallback}/>
+        <Route path="/settings" component={Settings}/>
     </Router>
 )
 export default routes;

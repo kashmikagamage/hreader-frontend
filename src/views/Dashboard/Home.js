@@ -3,13 +3,13 @@ import Header from "../../components/Header/Header";
 import Typography from '@material-ui/core/Typography';
 import TraineeTable from "../../components/Trainee/TraineeTable";
 import API from "../../components/api";
-import { 
-    Button, 
-    Dialog, 
-    DialogActions, 
-    DialogContent, 
-    DialogTitle, 
-    TextField, 
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField,
     Grid,
     FormControl,
     InputLabel,
@@ -31,7 +31,7 @@ export default function HomeView() {
         gender: "Male",
         height: "",
         weight: "",
-        tel: "012456789",
+        tel: "0000000000",
         status: "Active"
     });
 
@@ -78,9 +78,11 @@ export default function HomeView() {
                         confirmAlert({
                             title: 'Success',
                             message: 'Trainee added and assigned successfully!',
-                            buttons: [{ label: 'Ok', onClick: () => {
-                                getTrainees();
-                            }}]
+                            buttons: [{
+                                label: 'Ok', onClick: () => {
+                                    getTrainees();
+                                }
+                            }]
                         });
                     });
                 }

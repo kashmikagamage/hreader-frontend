@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { FitnessCenter } from '@material-ui/icons';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SettingsIcon from '@material-ui/icons/Settings';
 import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -89,6 +90,15 @@ export default function SearchAppBar() {
             Pulse Rate
           </Typography>
           
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="settings"
+            onClick={() => { history.push("/settings"); }}
+          >
+            <SettingsIcon/>
+          </IconButton>
           <IconButton
             edge="start"
             className={classes.menuButton}

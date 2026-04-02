@@ -2,6 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <!-- Clickjacking protection: hide page body, then remove the style only if
+         the page is the top-level window (not inside an iframe). If framed,
+         redirect the top window to this page's URL instead. -->
+    <style id="anti-clickjack">body{display:none!important}</style>
+    <script>
+      if (self === top) {
+        document.getElementById('anti-clickjack').remove();
+      } else {
+        top.location = self.location;
+      }
+    </script>
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
